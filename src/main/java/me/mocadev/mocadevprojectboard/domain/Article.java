@@ -1,13 +1,18 @@
 package me.mocadev.mocadevprojectboard.domain;
 
 import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,7 +30,6 @@ import org.springframework.data.annotation.LastModifiedDate;
  * @since 2022-09-29
  **/
 @Getter
-@ToString
 @Table(indexes = {
 	@Index(columnList = "title"),
 	@Index(columnList = "hashtag"),
@@ -46,6 +50,11 @@ public class Article {
 	private String content;
 	@Setter
 	private String hashtag;
+
+	@ToString.Exclude
+	@OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
+	@OrderBy("id")
+	private final Set<ArticleComment> articleCommentSet = new LinkedHashSet<>();
 
 	@CreatedDate
 	@Column(nullable = false)

@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @github https://github.com/chcjswo
  * @since 2022-11-04
  **/
+@Disabled("Spring Data Rest는 통합 테스트에서 제외")
 @DisplayName("Data Rest - API Test")
 @Transactional
 @AutoConfigureMockMvc
@@ -36,7 +38,7 @@ public class DataRestTest {
 
 	@Test
 	void test() throws Exception {
-		mockMvc.perform(get("/articles"))
+		mockMvc.perform(get("/api/articles"))
 			.andExpect(status().isOk())
 			.andExpect(content().contentType(MediaType.valueOf("application/hal+json")))
 			.andDo(print());
